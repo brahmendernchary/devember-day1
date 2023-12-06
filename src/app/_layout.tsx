@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
-import DayListItem from "./src/components/core/DayListItem";
+import { Stack } from "expo-router";
 import {
   useFonts,
   Inter_100Thin,
@@ -18,11 +16,8 @@ import {
   AmaticSC_700Bold,
 } from "@expo-google-fonts/amatic-sc";
 import * as SplashScreen from "expo-splash-screen";
-
 SplashScreen.preventAutoHideAsync();
-const days = [...Array(24)].map((val, index) => index + 1);
-
-export default function App() {
+export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
     Inter: Inter_900Black,
     Amatic: AmaticSC_400Regular,
@@ -38,29 +33,9 @@ export default function App() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
   return (
-    <View style={styles.container}>
-      <FlatList
-        contentContainerStyle={styles.content}
-        columnWrapperStyle={styles.column}
-        numColumns={2}
-        data={days}
-        renderItem={({ item }) => <DayListItem day={item} />}
-      />
-      <StatusBar style="auto" />
-    </View>
+    <Stack screenOptions={{}}>
+      <Stack.Screen name="index" options={{ title: "Devember" }} />
+    </Stack>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5d4d4",
-  },
-  content: {
-    gap: 10,
-    padding: 10,
-  },
-  column: { gap: 10 },
-});
